@@ -5,9 +5,10 @@ sieve [] = []
 sieve (x:xs) = x:(sieve $ takeNonMultiples xs)
   where takeNonMultiples = helper x
         helper _ [] = []
-        helper nextMultiple xs = half1 ++ (helper (n+x) $ dropWhile (==n) half2)
-          where (half1, half2) = span (<n) xs
-                n = nextMultiple
+        helper nextMultiple xs = lesser ++ (helper (n+x) greater)
+          where n = nextMultiple
+                (lesser, greatereq) = span (<n) xs
+                greater = dropWhile (==n) greatereq
 
 sieve2 :: Integral a => [a] -> [a]
 sieve2 [] = []
